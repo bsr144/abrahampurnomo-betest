@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "b07fde1b-2cad-4479-a64e-9151572a2e9c",
+		"name": "Jenius",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23512643",
+		"_collection_link": "https://cloudy-sunset-164139.postman.co/workspace/KW-Teams~1e47a22d-75b6-413e-b40b-e0f8b99761e2/collection/23512643-b07fde1b-2cad-4479-a64e-9151572a2e9c?action=share&source=collection_link&creator=23512643"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"brick10@mail.com\",\n    \"password\": \"password2!\",\n    \"username\": \"nohesi10\",\n    \"accountNumber\": \"2234564326\",\n    \"identityNumber\": \"1111222233335557\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code != 200) {",
+									"    console.error(\"an error occured\")",
+									"}",
+									"",
+									"postman.setEnvironmentVariable(",
+									"    \"accessToken\",",
+									"    pm.response.json().data.access_token",
+									")",
+									"",
+									"request = JSON.parse(pm.request.body.raw)",
+									"",
+									"console.info(`accessToken is updated for user ${request.email}`)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"identifier\": \"nohesi10\",\n    \"password\": \"password2!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "By Account Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/account-number/:accountNumber",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"account-number",
+								":accountNumber"
+							],
+							"variable": [
+								{
+									"key": "accountNumber",
+									"value": "2234564326"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "By Identity Number",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/identity-number/:identityNumber",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"identity-number",
+								":identityNumber"
+							],
+							"variable": [
+								{
+									"key": "identityNumber",
+									"value": "1111222233334444"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"brick34@mail.com\",\n    \"username\": \"nohesi242\",\n    \"accountNumber\": \"2234564300\",\n    \"identityNumber\": \"1111222233335500\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6612ae4f637e6e8f0abe409d"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "By Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/v1/users/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "6612ae4f637e6e8f0abe409d"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
