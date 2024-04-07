@@ -6,7 +6,6 @@ const redisClient = require("./src/config/redis");
 const port = process.env.APP_PORT || 3000;
 
 (async () => {
-  console.log(process.env.NODE_ENV);
   try {
     const server = app.listen(port, () => {
       database.connectDB();
