@@ -1,0 +1,42 @@
+version: "3.8"
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      APP_NAME: "ms-abrahampurnomo-test"
+      APP_URL: "http://localhost"
+      APP_PORT: 3000
+      APP_VERSION: "1"
+      DB_NAME: "db_abrahampurnomo_test"
+      DB_HOST: "mongodb://mongo:27017"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      REDIS_USERNAME: "default"
+      REDIS_PASSWORD: "secret-redis"
+      REDIS_EXPIRY_TIME: "86400"
+      API_HIT_LIMIT: "20"
+      API_HIT_TIME_LIMIT_MILISECONDS: "60000"
+      JWT_SECRET: "secret"
+      JWT_EXPIRATION_TIME: "24h"
+      SALT: "12"
+    depends_on:
+      - mongo
+      - redis
+    links:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: "db_abrahampurnomo_test"
+
+  redis:
+    image: redis
+    command: ["redis-server", "--requirepass", "secret-redis"]
+    ports:
+      - "6379:6379"
